@@ -1,11 +1,11 @@
 import { Plan } from "@prisma/client"
-interface SignupRequest  {
+interface SignupRequest {
     name: string,
     email: string,
     password: string
 }
 
-interface LoginRequest  {
+interface LoginRequest {
     email: string;
     password: string;
 }
@@ -17,4 +17,9 @@ interface CurrentUser {
     active_plan?: Plan
 }
 
-export { SignupRequest, LoginRequest, CurrentUser }
+interface SubscriptionRequest {
+    plan_id: number
+    is_monthly : boolean
+}
+
+export { SignupRequest, LoginRequest, CurrentUser, SubscriptionRequest}
