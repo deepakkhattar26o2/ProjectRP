@@ -15,11 +15,16 @@ interface CurrentUser {
     name: string,
     email: string,
     active_plan?: Plan
+    customer_id?: string
 }
 
 interface SubscriptionRequest {
     plan_id: number
-    is_monthly : boolean
+    is_monthly: boolean
+    cardNumber: string,
+    expMonth: string,
+    expYear: string,
+    cvc: string
 }
 
-export { SignupRequest, LoginRequest, CurrentUser, SubscriptionRequest}
+export { SignupRequest, LoginRequest, CurrentUser, SubscriptionRequest }
