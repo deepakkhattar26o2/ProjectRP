@@ -26,5 +26,9 @@ interface SubscriptionRequest {
     expYear: string,
     cvc: string
 }
+interface VerifiedEmailUpdateRequest{
+    email : string,
+    password : string
+}
 
-export { SignupRequest, LoginRequest, CurrentUser, SubscriptionRequest }
+export { SignupRequest, LoginRequest,VerifiedEmailUpdateRequest, CurrentUser, SubscriptionRequest }
