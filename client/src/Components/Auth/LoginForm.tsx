@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from 'axios'
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function LoginForm({ flip , FP}: any) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false)
+    const navigate = useNavigate();
     const sendLoginRequest = (e: React.FormEvent) => {
         e.preventDefault();
         axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
@@ -14,6 +16,10 @@ export default function LoginForm({ flip , FP}: any) {
             if (rememberMe && data.token) {
                 localStorage.setItem("token", data.token);
             }
+            else{
+                sessionStorage.setItem("token", data.token);
+            }
+            navigate('/home', {replace : true});
             //navigate to home screen
         }).catch((err) => { 
             console.log("Something went wrong with Login!") 
@@ -32,7 +38,7 @@ export default function LoginForm({ flip , FP}: any) {
          })
     }
     return (
-        <div className="w-2/4 bg-white shadow-md border border-gray-200 rounded-2xl max-w-sm p-4 sm:p-6 lg:p-8">
+        <div className=" bg-white shadow-md border border-gray-200 rounded-2xl p-4 sm:p-6 lg:p-8" style={{width: "25vw"}}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 

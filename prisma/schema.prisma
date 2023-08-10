@@ -16,8 +16,7 @@ model User {
   email            String        @unique
   password         String
   has_monthly_plan Boolean       @default(false)
-  subscription_id  Int?          @unique
-  subscription     Subscription? @relation(references: [id], fields: [subscription_id])
+  subscription     Subscription?
   created_at       DateTime      @default(now())
 }
 
@@ -30,15 +29,18 @@ model Plan {
   resolution               String
   devices                  String
   number_of_active_screens Int
-  stripe_monthly_id        String @default("")
-  stripe_yearly_id         String @default("")
+  stripe_monthly_id        String         @default("")
+  stripe_yearly_id         String         @default("")
   subscriptions            Subscription[] @relation(name: "plan-details")
 }
 
 model Subscription {
-  id        Int    @unique @default(autoincrement())
-  stripe_id String
-  plan_id   Int
-  details   Plan   @relation(references: [id], fields: [plan_id], name: "plan-details")
-  User      User?
+  id           Int      @unique @default(autoincrement())
+  stripe_id    String
+  plan_id      Int
+  details      Plan     @relation(references: [id], fields: [plan_id], name: "plan-details")
+  user_id      Int      @unique
+  User         User     @relation(references: [id], fields: [user_id])
+  is_cancelled Boolean  @default(false)
+  created_at   DateTime @default(now())
 }

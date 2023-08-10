@@ -3,9 +3,10 @@ import prisma from "../../PrismaClinet";
 import { Plan, User } from '@prisma/client'
 import { CurrentUser, SubscriptionRequest } from "../Helpers/TypeDefs";
 import { authDetails } from "../Helpers/Middleware";
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+import Stripe from "stripe";
+const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {apiVersion: '2022-11-15'})
 let plans = [{
-    name: 'Basic',
+    name: 'Mobile',
     monthly_price: 100,
     yearly_price: 1000,
     video_quality: 'Good',
@@ -16,7 +17,7 @@ let plans = [{
     stripe_yearly_id: "price_1NdHBESDwKsWhQ67HgQmqTNP"
 },
 {
-    name: 'Standard',
+    name: 'Basic',
     monthly_price: 200,
     yearly_price: 2000,
     video_quality: 'Good',
@@ -27,7 +28,7 @@ let plans = [{
     stripe_yearly_id: "price_1NdHDMSDwKsWhQ67Za7ytHuf"
 },
 {
-    name: 'Premium',
+    name: 'Standard',
     monthly_price: 500,
     yearly_price: 5000,
     video_quality: 'Better',
@@ -38,7 +39,7 @@ let plans = [{
     stripe_yearly_id: "price_1NdHGASDwKsWhQ670QRZ0miN"
 },
 {
-    name: 'Regular',
+    name: 'Premium',
     monthly_price: 700,
     yearly_price: 7000,
     video_quality: 'Best',
@@ -74,35 +75,20 @@ const SubscriptionHandler = async (req: Request, res: Response) => {
         return res.status(400).json({ message: "Missing Plan Id" });
     }
     let user = await prisma.user.findFirst({ where: { id: currUser.id }, include: { subscription: true } });
+    
     if (user?.subscription) {
-        return res.status(409).json({ message: `You're already subscribed to a plan!` })
     }
     let plan = await prisma.plan.findFirst({where : {id : body.plan_id}});
-
-    try {
-        const { card_number, expMonth, expYear, cvc } = req.body;
-        console.log(card_number)
-        // Create a customer
-        const customer = await stripe.customers.create({
-            name: currUser.name,
-            email: currUser.email,
-            source: card_number,
-        });
-        console.log(customer)
-        //update customer_id in user in db
-        
-        // Create a subscription
-        const subscription = await stripe.subscriptions.create({
-            customer: customer.id,
-            items: [{ plan: body.is_monthly ? plan?.stripe_monthly_id : plan?.stripe_yearly_id}],
-        });
-        //create subscription in db
-
-
-        res.status(200).json({ message: "Subscription Successful" , deets : subscription, customer : customer})
-    } catch (error : any) {
-        res.status(500).json({messsage : error.message});
-    }
+    // handle stripe logic
+    prisma.subscription.create({
+        data : {
+            stripe_id : String(user?.id),
+            plan_id : Number(plan?.id),
+            user_id :Number(user?.id)
+        }
+    }).then(()=>{return res.status(200).json({message : "subscription created successfully"})}).catch((err : Error)=>{
+        return res.status(500).json({message : err.message})
+    })
 }
 
 const CancellationHandler = async (req: Request, res: Response) => {
@@ -113,14 +99,10 @@ const CancellationHandler = async (req: Request, res: Response) => {
         return res.status(404).json({ message: "Plans not found!" });
     }
 
-    //handle cancellation logic
-    prisma.user.update({
-        where: { id: currUser.id }, data: {
-            subscription: { disconnect: true },
-        }
-    }).then((data) => {
-        return res.status(200).json({ message: "Subscription cancelled successfully" });
-    }).catch((err: Error) => { return res.status(500).json({ message: err.message }) })
+    //handle stripe logic
+    prisma.subscription.update({where : {user_id : currUser.id}, data : {
+        is_cancelled : true
+    }})
 }
 
 const GetSubscriptionDetails = async (req: Request, res: Response) => {
