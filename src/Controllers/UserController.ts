@@ -9,7 +9,7 @@ import { LoginRequestValidator, SignupRequestValidator } from '../Helpers/Valida
 import { authDetails } from '../Helpers/Middleware';
 
 const SignupHandler = async (req: Request, res: Response) => {
-    const body: SignupRequest = req.body;
+    const body: SignupRequest = req.body ;
 
     const validation = SignupRequestValidator(body);
 
