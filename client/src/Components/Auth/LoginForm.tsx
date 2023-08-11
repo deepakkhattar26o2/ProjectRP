@@ -2,10 +2,12 @@ import { useState } from "react";
 import axios from 'axios'
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 export default function LoginForm({ flip , FP}: any) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false)
+    const auth = useAuth();
     const navigate = useNavigate();
     const sendLoginRequest = (e: React.FormEvent) => {
         e.preventDefault();
@@ -16,9 +18,7 @@ export default function LoginForm({ flip , FP}: any) {
             if (rememberMe && data.token) {
                 localStorage.setItem("token", data.token);
             }
-            else{
-                sessionStorage.setItem("token", data.token);
-            }
+            auth?.login(data.token);
             navigate('/home', {replace : true});
             //navigate to home screen
         }).catch((err) => { 
@@ -38,8 +38,8 @@ export default function LoginForm({ flip , FP}: any) {
          })
     }
     return (
-        <div className=" bg-white shadow-md border border-gray-200 rounded-2xl p-4 sm:p-6 lg:p-8" style={{width: "25vw"}}>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
+        <div className=" bg-white shadow-md border border-gray-200 rounded-2xl p-4 sm:p-6 lg:p-6" style={{width: "25vw"}}>
+            <div className="flex min-h-full flex-1 flex-col justify-center px-4 lg:px-6">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 
                     <h4 className="mt-10 text-center text-xl font-bold  leading-9 tracking-tight text-gray-900">
@@ -91,7 +91,8 @@ export default function LoginForm({ flip , FP}: any) {
                             </div>
                         </div>
                         <div className="flex items-center mb-4">
-                            <input onClick={() => { setRememberMe(!rememberMe) }} id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                
+                            <input  onClick={() => { setRememberMe(!rememberMe) }} id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium ">Remember Me</label>
                         </div>
 

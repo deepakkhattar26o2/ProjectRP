@@ -2,12 +2,14 @@ import { useState } from "react";
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 export default function SignupForm({ flip }: any) {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
     const navigate = useNavigate();
+    const auth = useAuth();
     const sendSignupRequest = (e : React.FormEvent)=>{
         e.preventDefault();
         axios.post(`${import.meta.env.VITE_API_URL}/user/signup`, {
@@ -18,9 +20,7 @@ export default function SignupForm({ flip }: any) {
             if (rememberMe && data.token) {
                 localStorage.setItem("token", data.token);
             }
-            else{
-                sessionStorage.setItem("token", data.token);
-            }
+            auth?.login(data.token);
             navigate('/home', {replace : true});
 
             //navigate to home screen
@@ -40,7 +40,7 @@ export default function SignupForm({ flip }: any) {
         })
     }
     return (
-        <div className="bg-white shadow-md border border-gray-200 rounded-2xl  p-4 sm:p-6 lg:p-8" style={{width: "25vw"}}>
+        <div className="bg-white shadow-md border border-gray-200 rounded-2xl  p-4 sm:p-6 lg:p-6" style={{width: "25vw"}}>
             <div className="flex min-h-full flex-1 flex-col justify-center px-12  lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
 

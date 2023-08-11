@@ -11,13 +11,12 @@ datasource db {
 }
 
 model User {
-  id               Int           @unique @default(autoincrement())
-  name             String
-  email            String        @unique
-  password         String
-  has_monthly_plan Boolean       @default(false)
-  subscription     Subscription?
-  created_at       DateTime      @default(now())
+  id           Int           @unique @default(autoincrement())
+  name         String
+  email        String        @unique
+  password     String
+  subscription Subscription?
+  created_at   DateTime      @default(now())
 }
 
 model Plan {
@@ -42,5 +41,6 @@ model Subscription {
   user_id      Int      @unique
   User         User     @relation(references: [id], fields: [user_id])
   is_cancelled Boolean  @default(false)
+  is_monthly   Boolean  @default(true)
   created_at   DateTime @default(now())
 }

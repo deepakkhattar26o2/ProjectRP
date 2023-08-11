@@ -11,3 +11,9 @@ interface Plan {
     yearly_price: number
     is_monthly : boolean
 }
+
+interface AuthContextType {
+    token: string | null;
+    login: (newToken: string) => void;
+    logout: () => void;
+}
