@@ -1,49 +1,76 @@
-.content{
+.container-class {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1000px;
+  padding: 1rem !important;
+}
+
+.top-row {
+  margin-bottom: 1rem !important;
+}
+
+.row-class {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-class {
+  flex: 1.5 0;
+}
+.col-class-3 {
+  flex: 0 0 auto;
+  width: 25%;
+}
+.col-class-12 {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.content {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.titles-row{
+.titles-row {
   text-align: left !important;
   line-height: 80px;
-  margin-top: 33px !important;
+  margin-top: 20px !important;
 }
 
-.values-row{
+.values-row {
   line-height: 50px;
 }
 
-.buttons-wrapper{
+.buttons-wrapper {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #1D4C90;
-  border-radius: 20%;
+  background-color: #1d4c90;
   width: max-content;
   padding: 10px;
-  border-radius: var(--bs-border-radius-pill) !important;
+  border-radius: 100px !important;
 }
 
-.button-wrapper-row{
-  position: absolute;
-  top: -80px !important;
+.button-wrapper-row {
+  /* position: absolute; */
+  /* top: -80px !important; */
 }
 
-.buttons-wrapper button{
+.buttons-wrapper button {
   color: #fff;
   font-weight: bold;
 }
 
-.active-button{
+.active-button {
   background-color: #fff !important;
-  color:#1D4C90 !important;
+  color: #1d4c90 !important;
 }
 
-
-.plan-name{
+.plan-name {
   cursor: pointer;
-  background-color: #7894BC;
+  background-color: #7894bc;
   color: #fff;
   font-weight: bold;
   display: flex;
@@ -52,27 +79,38 @@
   height: 9em;
   margin-bottom: 20px;
 }
-.active-plan{
-  background-color: #1D4C90 !important;
+.active-plan {
+  background-color: #1d4c90 !important;
   position: relative;
 }
-.active-plan>.plan-name{
-  background-color: #1D4C90 !important;;
+.active-plan > .plan-name {
+  background-color: #1d4c90 !important;
 }
-.active-plan::after{
+.active-plan::after {
   content: "";
   position: absolute;
-  bottom: -19px; 
+  bottom: -19px;
   left: calc(50% - 10px);
   border-width: 10px;
   border-style: solid;
-  border-color: transparent transparent #1D4C90 transparent; 
+  border-color: transparent transparent #1d4c90 transparent;
   transform: rotate(180deg);
 }
 
-.plan-texts{
+.plan-texts {
   color: #000 !important;
 }
-.active-texts{
-  color: #1D4C90 !important;
+.active-texts {
+  color: #1d4c90 !important;
+}
+.left-content{
+  position: relative !important;
+}
+
+.btn-class{
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: 100px;
+  padding: 0.25em 0.5em 0.25em 0.5em !important;
 }

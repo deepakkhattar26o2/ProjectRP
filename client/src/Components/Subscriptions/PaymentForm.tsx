@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function PaymentForm({plan, isMonthly, flip} : {plan :Plan, isMonthly : Boolean, flip : any}) {
     const navigate = useNavigate();
-    // const stripe = useStripe();
-    // const elements = useElements
-    // const [cardNumber, setCardNumber] = useState('');
-    // const [exp, setExp] = useState('');
-    // const [cvc, setCvc] = useState('');
+    const stripe = useStripe();
+    const elements = useElements
+    const handleChange = (e : any)=>{
+        console.log(e.target.value);
+    }
     const handleSubmit = (e: React.MouseEvent) => {
         e.preventDefault();
         axios.post(`${import.meta.env.VITE_API_URL}/plan/buy`, {
@@ -31,9 +31,10 @@ export default function PaymentForm({plan, isMonthly, flip} : {plan :Plan, isMon
                 <h2 style={{ paddingTop: "2.5rem" }} className="font-bold text-2xl">Complete Payment</h2>
                 <p className="text-slate-700">Enter your credit or debit card details below</p>
 
-                <div style={{ display: "flex", marginTop: "1.5rem" }} className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
+                <div style={{display: "flex", marginTop: "1.5rem", height: 40 }} className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
                     {/**payment here */}
-                    <CardElement/>
+                    
+                    <CardElement onChange={(e)=>{handleChange(e)}} className="w-full"/>
                     {/* <input onChange={(e) => { setCardNumber(e.target.value) }} style={{ width: "60%" }} placeholder="Card Number" />
                     <input onChange={(e) => { setExp(e.target.value) }} style={{ width: "20%" }} placeholder="MM/YY" type="month" />
                     <input onChange={(e) => { setCvc(e.target.value) }} style={{ width: "20%" }} placeholder="CVC" /> */}
