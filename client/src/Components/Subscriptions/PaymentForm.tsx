@@ -31,7 +31,7 @@ export default function PaymentForm({plan, isMonthly, flip} : {plan :Plan, isMon
                 <h2 style={{ paddingTop: "2.5rem" }} className="font-bold text-2xl">Complete Payment</h2>
                 <p className="text-slate-700">Enter your credit or debit card details below</p>
 
-                <div style={{display: "flex", marginTop: "1.5rem", height: 40 }} className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
+                <div style={{display: "flex", marginTop: "1.5rem", height: 40, alignItems : 'center'}} className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
                     {/**payment here */}
                     
                     <CardElement onChange={(e)=>{handleChange(e)}} className="w-full"/>

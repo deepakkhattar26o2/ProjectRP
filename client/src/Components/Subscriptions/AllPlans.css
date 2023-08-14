@@ -78,6 +78,7 @@
   align-items: center;
   height: 9em;
   margin-bottom: 20px;
+  margin-right: 10px;
 }
 .active-plan {
   background-color: #1d4c90 !important;
