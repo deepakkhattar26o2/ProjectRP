@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function UpdatePassword({ email }: any) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setCpassword] = useState('')
-
+    const navigate = useNavigate()
     const handlePasswordUpdate = (e: React.FormEvent) => {
         e.preventDefault();
         if (password == confirmPassword) {
@@ -24,6 +25,8 @@ export default function UpdatePassword({ email }: any) {
                         progress: undefined,
                         theme: "light",
                         });
+                        navigate('/home')
+                    
                 }
             ).catch((err)=>{
                 if(err.response?.data?.message){
@@ -74,6 +77,7 @@ export default function UpdatePassword({ email }: any) {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    placeholder="New Password"
                                     autoComplete="password"
                                     required
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -87,6 +91,7 @@ export default function UpdatePassword({ email }: any) {
                                     id="cpassword"
                                     name="cpassword"
                                     type="cpassword"
+                                    placeholder="Confirm your password"
                                     autoComplete="cpassword"
                                     required
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
