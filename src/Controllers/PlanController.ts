@@ -3,6 +3,7 @@ import prisma from "../../PrismaClinet";
 import { Plan, User } from '@prisma/client'
 import { CurrentUser, SubscriptionRequest } from "../Helpers/TypeDefs";
 import { authDetails } from "../Helpers/Middleware";
+require('dotenv').config();
 import Stripe from "stripe";
 const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), { apiVersion: "2022-11-15" })
 let plans = [{
@@ -131,7 +132,7 @@ const CancellationHandler = async (req: Request, res: Response) => {
 
     //handle stripe logic
 
-    const subscription = await prisma.subscription.findFirst({where : {user_id : currUser.id}});
+    const subscription = await prisma.subscription.findFirst({ where: { user_id: currUser.id } });
 
     // Cancel the subscription
     const canceledSubscription = await stripe.subscriptions.del(String(subscription?.stripe_id));
