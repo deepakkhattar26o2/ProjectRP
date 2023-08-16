@@ -38,7 +38,7 @@ const ExistingPlan = ({ navigate, isCancelled, plan, isMonthly, expDate, created
                 {isCancelled ? "Choose Plan" : "Change Plan"}
             </button>
             <div className="bg-slate-200 my-2 p-0.5">
-                {isCancelled ? `Your Subscription was cancelled and you will loose access to services on ${months[Number(expDate?.getMonth()) - 1]}  ${expDate?.getDate()}, ${expDate?.getFullYear()}` : `Your Subscription has started on ${months[Number(createdAt?.getMonth()) - 1]} ${createdAt?.getDate()}, ${createdAt?.getFullYear()} and will auto renew on ${months[Number(expDate?.getMonth()) - 1]}  ${expDate?.getDate()}, ${expDate?.getFullYear()}`}
+                {isCancelled ? `Your Subscription was cancelled and you will loose access to services on ${months[Number(expDate?.getMonth())]}  ${expDate?.getDate()}, ${expDate?.getFullYear()}` : `Your Subscription has started on ${months[Number(createdAt?.getMonth())]} ${createdAt?.getDate()}, ${createdAt?.getFullYear()} and will auto renew on ${months[Number(expDate?.getMonth())]}  ${expDate?.getDate()}, ${expDate?.getFullYear()}`}
             </div>
         </div>
     </div>
